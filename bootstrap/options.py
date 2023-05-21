@@ -1,0 +1,2 @@
+#define options
+warning__ = {""}
