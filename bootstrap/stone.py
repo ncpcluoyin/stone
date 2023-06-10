@@ -5,7 +5,7 @@ import sys
 
 if __name__ == "__main__":
     if "quiet" in sys.argv:
-        messages.out = False
+        messages.__out = False
     output("relix stone")
 
 import options

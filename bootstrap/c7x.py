@@ -4,7 +4,7 @@ from typeDefine import *
 import sys
 if __name__ == "__main__":
     if "quiet" in sys.argv:
-        messages.out = False
+        messages.__out = False
     output("relix c7x")
 
 def compileFormatted(v:str):

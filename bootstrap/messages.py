@@ -1,5 +1,5 @@
 #define message functions
-out = True
+__out = True
 def output(value):
-    if out == True:
+    if __out == True:
         print(value)

@@ -47,3 +47,4 @@ def basicTypeConvertToCType(Type:int):
         result = CUInt64
     if Type == typeUInt128:
         result = CUInt128
+    return result
