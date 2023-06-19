@@ -1,12 +1,6 @@
 import options
-from messages import *
 from typeDefine import *
 import sys
-if __name__ == "__main__":
-    if "quiet" in sys.argv:
-        messages.__out = False
-    output("relix c7x")
-
 def compileFormatted(v:str):
     buffer = list()
     lines = v.splitlines()
