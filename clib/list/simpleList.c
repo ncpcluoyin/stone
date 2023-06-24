@@ -1,7 +1,7 @@
 #include "simpleList.h"
 #include "../includes/typeDefine.h"
 //init functions
-simpleList * simpleList_init_nil(){
+simpleList * simpleList_init_void(){
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
     self->valueCounter = defaultInitSize - 1;
     self->positionCounter = 0;
@@ -21,18 +21,106 @@ simpleList * simpleList_init_int32(int32_t initSize){
 //the first argument's name must be "self" with a type "simpleList*"
 
 int32_t simpleList_append_int32_object(simpleList * self,object value){
-    if(self->positionCounter == self->valueCounter){
-        object * tmpPtr = malloc(self->valueCounter * 2);
-        for(int32_t i=0;i == self->valueCounter;i++){
+    if((self->positionCounter-1) == self->valueCounter){
+        object * tmpPtr = malloc((self->valueCounter+1) * 2 * sizeof(object));
+        for(int32_t i=0;i != self->valueCounter;i++){
             tmpPtr[i] = self->objectArray[i];
         }
         free(self->objectArray);
         self->objectArray = tmpPtr;
-        self->valueCounter = self->valueCounter * 2;
+        self->valueCounter = ((self->valueCounter+1) * 2) - 1;
     }
     self->objectArray[self->positionCounter] = value;
     self->positionCounter++;
     return self->positionCounter - 1;
+}
+
+bool simpleList_have_bool_object(simpleList* self,object value){
+    bool have = false;
+    for(int32_t i;i != self->positionCounter;i++){
+        if(self->objectArray[i] == value){have = true;}
+    }
+    return have;
+}
+
+int32_t simpleList_set_int32_int32_object(simpleList* self,int32_t position,object value){
+    if(position > self->valueCounter || position < 0){
+        return -(position);
+    }
+    if(position<self->positionCounter){
+        free(self->objectArray[position]);
+    }
+    self->objectArray[position] = value;
+    return position;
+}
+
+object simpleList_get_object_void(simpleList* self){
+    return self->objectArray[self->positionCounter-1];
+}
+
+object simpleList_get_object_int32(simpleList* self,int32_t position){
+    if(position > (self->positionCounter - 1) || position < 0){
+        return NULL;
+    }
+    return self->objectArray[position];
+}
+
+bool simpleList_delete_bool_int32(simpleList* self,int32_t position){
+    if(position > (self->positionCounter - 1) || position < 0){
+        return false;
+    }
+    object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
+    int32_t offSet = 0;
+    for(int32_t i;i != self->positionCounter;i++){
+        if(i == position){
+            offSet++;
+            free(self->objectArray[i]);
+            continue;
+        }
+        tmpPtr[i-offSet] = self->objectArray[i];
+    }
+    free(self->objectArray);
+    self->objectArray = tmpPtr;
+    return true;
+}
+
+bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to){
+    if(from>=to){
+        return false;
+    }
+    if(from<0){
+        return false;
+    }
+    if(to > (self->positionCounter - 1)){
+        return false;
+    }
+    object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
+    int32_t offSet = 0;
+    for(int32_t i;i != self->positionCounter;i++){
+        if(i >= from || i <= to){
+            offSet++;
+            free(self->objectArray[i]);
+            continue;
+        }
+        tmpPtr[i-offSet] = self->objectArray[i];
+    }
+    free(self->objectArray);
+    self->objectArray = tmpPtr;
+    return true;
+}
+
+void simpleList_close(simpleList* self){
+    for(int32_t i;i != self->valueCounter;i++){
+        free(self->objectArray[i]);
+    }
+    free(self->objectArray);
+    free(self);
+}
+
+void simpleList_clear_void_void(simpleList* self){
+    simpleList * tmpPtr = simpleList_init_int32(self->valueCounter+1);
+    simpleList_close(self);
+    self = tmpPtr;
 }
 
 //end impl

@@ -28,8 +28,18 @@ typedef struct{
 } simpleList;
 
 //init for simpleList structure
-simpleList * simpleList_init_nil();
+simpleList * simpleList_init_void();
 simpleList * simpleList_init_int32(int32_t initSize);
 
 //impl for simpleList structure
 int32_t simpleList_append_int32_object(simpleList* self,object value);
+bool simpleList_have_bool_object(simpleList* self,object value);
+int32_t simpleList_set_int32_int32_object(simpleList* self,int32_t position,object value);
+object simpleList_get_object_void(simpleList* self);
+object simpleList_get_object_int32(simpleList* self,int32_t position);
+bool simpleList_delete_bool_int32(simpleList* self,int32_t position);
+bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to);
+void simpleList_clear_void_void(simpleList* self);
+void simpleList_close(simpleList* self);
+object simpleList_pop_object_void(simpleList* self);//TODO
+object simpleList_pop_object_int32(simpleList* self,int32_t position);//TODO
