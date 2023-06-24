@@ -1,0 +1,3 @@
+/*
+this file defines stone basic types
+*/
