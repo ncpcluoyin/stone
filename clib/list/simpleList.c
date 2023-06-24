@@ -3,16 +3,16 @@
 //init functions
 simpleList * simpleList_init_nil(){
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
-    self->valueCounter = defaultInitSize;
-    self->positionCounter = 1;
-    self->voidArray = malloc(sizeof(void*) * defaultInitSize);
+    self->valueCounter = defaultInitSize - 1;
+    self->positionCounter = 0;
+    self->objectArray = malloc(sizeof(object) * defaultInitSize);
     return self;
 }
 simpleList * simpleList_init_int32(int32_t initSize){
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
-    self->valueCounter = initSize;
-    self->positionCounter = 1;
-    self->voidArray = malloc(sizeof(void*) * initSize);
+    self->valueCounter = initSize - 1;
+    self->positionCounter = 0;
+    self->objectArray = malloc(sizeof(object) * initSize);
     return self;
 }
 //end init functions
@@ -20,17 +20,19 @@ simpleList * simpleList_init_int32(int32_t initSize){
 //impl for simpleList structure
 //the first argument's name must be "self" with a type "simpleList*"
 
-int32_t simpleList_append_int32_object(simpleList * self,void * value){
+int32_t simpleList_append_int32_object(simpleList * self,object value){
     if(self->positionCounter == self->valueCounter){
-        void ** tmpPtr = malloc(self->valueCounter * 2);
-        void * tmpArray[self->valueCounter];
-        *tmpArray = *self->voidArray;
-        for(int32_t i=1;i == self->valueCounter;i++){
-            tmpPtr[i-1] = self->voidArray[i-1];
+        object * tmpPtr = malloc(self->valueCounter * 2);
+        for(int32_t i=0;i == self->valueCounter;i++){
+            tmpPtr[i] = self->objectArray[i];
         }
-        for(int32_t i=1;i == self->valueCounter;i++){
-        }
+        free(self->objectArray);
+        self->objectArray = tmpPtr;
+        self->valueCounter = self->valueCounter * 2;
     }
+    self->objectArray[self->positionCounter] = value;
+    self->positionCounter++;
+    return self->positionCounter - 1;
 }
 
 //end impl

@@ -24,7 +24,7 @@
 typedef struct{
     int32_t valueCounter;
     int32_t positionCounter;
-    void ** voidArray;
+    object * objectArray;
 } simpleList;
 
 //init for simpleList structure
@@ -32,4 +32,4 @@ simpleList * simpleList_init_nil();
 simpleList * simpleList_init_int32(int32_t initSize);
 
 //impl for simpleList structure
-int32_t simpleList_append_int32_object(simpleList* self,void* value);
+int32_t simpleList_append_int32_object(simpleList* self,object value);
