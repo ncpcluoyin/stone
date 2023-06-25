@@ -1,11 +1,10 @@
 #include "simpleList.h"
-#include "../includes/typeDefine.h"
 //init functions
 simpleList * simpleList_init_void(){
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
-    self->valueCounter = defaultInitSize - 1;
+    self->valueCounter = simpleListDefaultInitSize - 1;
     self->positionCounter = 0;
-    self->objectArray = malloc(sizeof(object) * defaultInitSize);
+    self->objectArray = malloc(sizeof(object) * simpleListDefaultInitSize);
     return self;
 }
 simpleList * simpleList_init_int32(int32_t initSize){
@@ -81,6 +80,7 @@ bool simpleList_delete_bool_int32(simpleList* self,int32_t position){
     }
     free(self->objectArray);
     self->objectArray = tmpPtr;
+    self->positionCounter--;
     return true;
 }
 
@@ -106,6 +106,7 @@ bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to
     }
     free(self->objectArray);
     self->objectArray = tmpPtr;
+    self->positionCounter = self->positionCounter - (to-from+1);
     return true;
 }
 
@@ -121,6 +122,18 @@ void simpleList_clear_void_void(simpleList* self){
     simpleList * tmpPtr = simpleList_init_int32(self->valueCounter+1);
     simpleList_close(self);
     self = tmpPtr;
+}
+
+object simpleList_pop_object_void(simpleList* self){
+    object tmp = simpleList_get_object_void(self);
+    simpleList_delete_bool_int32(self,self->positionCounter-1);
+    return tmp;
+}
+
+object simpleList_pop_object_int32(simpleList* self,int32_t position){
+    object tmp = simpleList_get_object_int32(self,position);
+    simpleList_delete_bool_int32(self,position);
+    return tmp;
 }
 
 //end impl

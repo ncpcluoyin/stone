@@ -17,8 +17,10 @@
 #include <stdint-gcc.h>
 #include "../includes/alloc.h"
 #include "../includes/typeDefine.h"
+#ifndef __STONE_SIMPLE_LIST__
+#define __STONE_SIMPLE_LIST__ 1919810
 
-#define defaultInitSize 4
+#define simpleListDefaultInitSize 4
 
 //define structure(object only)
 typedef struct{
@@ -41,5 +43,7 @@ bool simpleList_delete_bool_int32(simpleList* self,int32_t position);
 bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to);
 void simpleList_clear_void_void(simpleList* self);
 void simpleList_close(simpleList* self);
-object simpleList_pop_object_void(simpleList* self);//TODO
-object simpleList_pop_object_int32(simpleList* self,int32_t position);//TODO
+object simpleList_pop_object_void(simpleList* self);
+object simpleList_pop_object_int32(simpleList* self,int32_t position);
+
+#endif
