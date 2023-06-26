@@ -1,21 +1,11 @@
 /*this file defines the basic list class "linkedList"*/
 #include "linkedList.h"
 //init
-linkedListNode* createNode(linkedListNode* next){
-    linkedListNode* tmpPtr = (linkedListNode*)malloc(sizeof(linkedListNode));
-    tmpPtr->next = next;
-    return tmpPtr;
-}
-
-linkedListNode* createVoidNode(){
-    return (linkedListNode*)malloc(sizeof(linkedListNode));
-}
-
 linkedList * linkedList_init_void(){
     linkedList* self = (linkedList*)malloc(sizeof(linkedList));
-    self->valueCounter = linkedListDefaultInitSize - 1;
+    self->next = self;
+    return self;
 }
-linkedList * linkedList_init_int32(int32_t initSize){}
 //impl
 int32_t linkedList_append_int32_object(linkedList* self,object value){}
 bool linkedList_have_bool_object(linkedList* self,object value){}

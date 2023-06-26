@@ -16,11 +16,8 @@ typedef struct{
     linkedListNode* firstNode;
 } linkedList;
 
-#define linkedListDefaultInitSize 4
-
 //init functions
 linkedList * linkedList_init_void();
-linkedList * linkedList_init_int32(int32_t initSize);
 //impl for linkedList
 int32_t linkedList_append_int32_object(linkedList* self,object value);
 bool linkedList_have_bool_object(linkedList* self,object value);
