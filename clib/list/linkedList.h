@@ -7,7 +7,7 @@
 
 typedef struct{
     object value;
-    linkedListNode* next;
+    void* next;
 } linkedListNode;
 
 typedef struct{

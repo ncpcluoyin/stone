@@ -16,14 +16,14 @@ void appendNewNode(linkedList* self){
         tmpPtr = tmpPtr->next;
     }
     tmpPtr->next = (linkedListNode*)malloc(sizeof(linkedListNode));
-    tmpPtr->next->next = self->firstNode;
+    ((linkedListNode*)tmpPtr->next)->next = self->firstNode;
     return;
 }
 //impl
 int32_t linkedList_append_int32_object(linkedList* self,object value){
     self->unusedFirstNode->value = value;
     int32_t returnValue = self->unusedFirstCounter;
-    if(self->unusedFirstCounter = self->valueCounter){
+    if(self->unusedFirstCounter == self->valueCounter){
         appendNewNode(self);
     }
     self->unusedFirstNode = self->unusedFirstNode->next;
@@ -38,8 +38,9 @@ int32_t linkedList_set_int32_int32_object(linkedList* self,int32_t position,obje
         return -(position);
     }
     if(position < self->positionCounter){
-        if(position > (self->positionCounter - position)){
-        }
+	    for(int32_t i;i != position - 1;i++){
+		
+	    }
     }
 }
 object linkedList_get_object_void(linkedList* self){}
