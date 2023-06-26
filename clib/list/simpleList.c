@@ -33,7 +33,7 @@ int32_t simpleList_append_int32_object(simpleList * self,object value){
     self->positionCounter++;
     return self->positionCounter - 1;
 }
-
+//TODO need rewrite "have"
 bool simpleList_have_bool_object(simpleList* self,object value){
     bool have = false;
     for(int32_t i;i != self->positionCounter;i++){
