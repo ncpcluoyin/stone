@@ -12,7 +12,7 @@ linkedList * linkedList_init_void(){
 //private methods
 void appendNewNode(linkedList* self){
     linkedListNode* tmpPtr = self->positionPtr;
-    for(int32_t i;i != self->valueCounter - self->positionCounter;i++){
+    for(int32_t i = 0;i != self->valueCounter - self->positionCounter;i++){
         tmpPtr = tmpPtr->next;
     }
     tmpPtr->next = (linkedListNode*)malloc(sizeof(linkedListNode));

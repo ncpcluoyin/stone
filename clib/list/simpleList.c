@@ -22,7 +22,7 @@ simpleList * simpleList_init_int32(int32_t initSize){
 int32_t simpleList_append_int32_object(simpleList * self,object value){
     if((self->positionCounter-1) == self->valueCounter){
         object * tmpPtr = malloc((self->valueCounter+1) * 2 * sizeof(object));
-        for(int32_t i=0;i != self->valueCounter;i++){
+        for(int32_t i=0;i != self->positionCounter;i++){
             tmpPtr[i] = self->objectArray[i];
         }
         free(self->objectArray);
@@ -36,7 +36,7 @@ int32_t simpleList_append_int32_object(simpleList * self,object value){
 //TODO need rewrite "have"
 bool simpleList_have_bool_object(simpleList* self,object value){
     bool have = false;
-    for(int32_t i;i != self->positionCounter;i++){
+    for(int32_t i = 0;i != self->positionCounter;i++){
         if(self->objectArray[i] == value){have = true;}
     }
     return have;
@@ -70,7 +70,7 @@ bool simpleList_delete_bool_int32(simpleList* self,int32_t position){
     }
     object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
     int32_t offSet = 0;
-    for(int32_t i;i != self->positionCounter;i++){
+    for(int32_t i = 0;i != self->positionCounter;i++){
         if(i == position){
             offSet++;
             free(self->objectArray[i]);
@@ -96,7 +96,7 @@ bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to
     }
     object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
     int32_t offSet = 0;
-    for(int32_t i;i != self->positionCounter;i++){
+    for(int32_t i = 0;i != self->positionCounter;i++){
         if(i >= from || i <= to){
             offSet++;
             free(self->objectArray[i]);
@@ -111,7 +111,7 @@ bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to
 }
 
 void simpleList_close(simpleList* self){
-    for(int32_t i;i != self->valueCounter;i++){
+    for(int32_t i = 0;i < self->positionCounter;i++){
         free(self->objectArray[i]);
     }
     free(self->objectArray);
