@@ -36,13 +36,8 @@ int32_t simpleList_append_int32_object(simpleList * self,object value){
 //TODO need rewrite "have"
 bool simpleList_have_bool_object(simpleList* self,bool equals(object,object),object value){
     bool have = false;
-<<<<<<< HEAD
-    for(int32_t i = 0;i != self->positionCounter;i++){
-        if(self->objectArray[i] == value){have = true;}
-=======
     for(int32_t i;i != self->positionCounter;i++){
         if(equals(self->objectArray[i],value)){have = true;}
->>>>>>> e510a67964aa023f6f16a13ca204672f04c81530
     }
     return have;
 }
