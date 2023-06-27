@@ -12,10 +12,9 @@ typedef struct{
 
 typedef struct{
     int32_t valueCounter;
-    int32_t positionCounter;
     int32_t unusedFirstCounter;
     linkedListNode* firstNode;
-    linkedListNode* positionPtr;
+    linkedListNode* middlePtr;
     linkedListNode* unusedFirstNode;
 } linkedList;
 

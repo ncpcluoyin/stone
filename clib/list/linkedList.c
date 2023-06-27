@@ -5,19 +5,15 @@ linkedList * linkedList_init_void(){
     linkedList* self = (linkedList*)malloc(sizeof(linkedList));
     self->firstNode = (linkedListNode*)malloc(sizeof(linkedListNode));
     self->firstNode->next = self->firstNode;
-    self->positionPtr = self->firstNode;
+    self->middlePtr = self->firstNode;
     self->unusedFirstNode = self->firstNode;
     return self;
 }
 //private methods
 void appendNewNode(linkedList* self){
-    linkedListNode* tmpPtr = self->positionPtr;
-    for(int32_t i;i != self->valueCounter - self->positionCounter;i++){
-        tmpPtr = tmpPtr->next;
-    }
-    tmpPtr->next = (linkedListNode*)malloc(sizeof(linkedListNode));
-    ((linkedListNode*)tmpPtr->next)->next = self->firstNode;
-    return;
+	self->unusedFirstNode->next = malloc(sizeof(linkedListNode));
+	((linkedListNode*)self->unusedFirstNode->next)->next = self->firstNode;
+	return;
 }
 //impl
 int32_t linkedList_append_int32_object(linkedList* self,object value){
@@ -25,8 +21,14 @@ int32_t linkedList_append_int32_object(linkedList* self,object value){
     int32_t returnValue = self->unusedFirstCounter;
     if(self->unusedFirstCounter == self->valueCounter){
         appendNewNode(self);
-    }
-    self->unusedFirstNode = self->unusedFirstNode->next;
+	self->valueCounter++;
+	if((self->valueCounter+1)%2 == 1){
+		self->middlePtr = (linkedListNode*)self->middlePtr->next;
+	}
+	else if((self->valueCounter+1)%2 == 0){
+		//Do nothing
+	}
+    self->unusedFirstNode = (linkedListNode*)self->unusedFirstNode->next;
     self->unusedFirstCounter++;
     return returnValue;
 }
@@ -37,10 +39,12 @@ int32_t linkedList_set_int32_int32_object(linkedList* self,int32_t position,obje
     if(!(position <= self->valueCounter)){
         return -(position);
     }
-    if(position < self->positionCounter){
+    linkedListNode* tmpPtr = NULL;
+    if(position < ((self->valueCounter+1)/2)-1){
 	    for(int32_t i;i != position - 1;i++){
-		
+			
 	    }
+
     }
 }
 object linkedList_get_object_void(linkedList* self){}
