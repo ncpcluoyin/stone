@@ -43,5 +43,8 @@ bool simpleList_delete_bool_int32(simpleList* self,int32_t position);
 void simpleList_close(simpleList* self);
 object simpleList_pop_object_void(simpleList* self);
 object simpleList_pop_object_int32(simpleList* self,int32_t position);
+object simpleList_exchange_object_int32_object(simpleList* self,int32_t position,object value);
+bool simpleList_exchange_bool_int32_int32(simpleList* self,int32_t position1,int32_t position2);
+int32_t simpleList_insert_int32_int32_object(simpleList* self,int32_t position,object value);
 
 #endif
