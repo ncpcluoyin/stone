@@ -84,32 +84,6 @@ bool simpleList_delete_bool_int32(simpleList* self,int32_t position){
     return true;
 }
 
-bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to){
-    if(from>=to){
-        return false;
-    }
-    if(from<0){
-        return false;
-    }
-    if(to > (self->positionCounter - 1)){
-        return false;
-    }
-    object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
-    int32_t offSet = 0;
-    for(int32_t i = 0;i != self->positionCounter;i++){
-        if(i >= from || i <= to){
-            offSet++;
-            free(self->objectArray[i]);
-            continue;
-        }
-        tmpPtr[i-offSet] = self->objectArray[i];
-    }
-    free(self->objectArray);
-    self->objectArray = tmpPtr;
-    self->positionCounter = self->positionCounter - (to-from+1);
-    return true;
-}
-
 void simpleList_close(simpleList* self){
     for(int32_t i = 0;i < self->positionCounter;i++){
         free(self->objectArray[i]);
@@ -117,13 +91,7 @@ void simpleList_close(simpleList* self){
     free(self->objectArray);
     free(self);
 }
-
-void simpleList_clear_void_void(simpleList* self){
-    simpleList * tmpPtr = simpleList_init_int32(self->valueCounter+1);
-    simpleList_close(self);
-    self = tmpPtr;
-}
-
+//TODO pop with something wrong
 object simpleList_pop_object_void(simpleList* self){
     object tmp = simpleList_get_object_void(self);
     simpleList_delete_bool_int32(self,self->positionCounter-1);
@@ -135,5 +103,5 @@ object simpleList_pop_object_int32(simpleList* self,int32_t position){
     simpleList_delete_bool_int32(self,position);
     return tmp;
 }
-
+//TODO
 //end impl

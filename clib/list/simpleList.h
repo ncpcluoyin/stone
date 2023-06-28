@@ -40,8 +40,6 @@ int32_t simpleList_set_int32_int32_object(simpleList* self,int32_t position,obje
 object simpleList_get_object_void(simpleList* self);
 object simpleList_get_object_int32(simpleList* self,int32_t position);
 bool simpleList_delete_bool_int32(simpleList* self,int32_t position);
-bool simpleList_deleteFromTo_bool_int32(simpleList* self,int32_t from,int32_t to);
-void simpleList_clear_void_void(simpleList* self);
 void simpleList_close(simpleList* self);
 object simpleList_pop_object_void(simpleList* self);
 object simpleList_pop_object_int32(simpleList* self,int32_t position);

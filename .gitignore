@@ -2,4 +2,5 @@ bootstrap/__pycache__
 .vscode
 *.o
 *.out
-test*
+test.*
+simpleListTest
