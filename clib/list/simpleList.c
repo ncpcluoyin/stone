@@ -63,6 +63,9 @@ int32_t simpleList_set_int32_int32_object(simpleList* self,int32_t _position,obj
 }
 
 object simpleList_get_object_void(simpleList* self){
+    if(self->positionCounter == 0){
+        return NULL;
+    }
     return self->objectArray[self->positionCounter-1];
 }
 

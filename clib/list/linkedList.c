@@ -5,7 +5,7 @@ linkedList * linkedList_init_void(){
     linkedList* self = (linkedList*)malloc(sizeof(linkedList));
     self->firstNode = (linkedListNode*)malloc(sizeof(linkedListNode));
     self->firstNode->next = self->firstNode;
-    self->middlePtr = self->firstNode;
+    self->middleNode = self->firstNode;
     self->unusedFirstNode = self->firstNode;
     return self;
 }
@@ -24,7 +24,7 @@ int32_t linkedList_append_int32_object(linkedList* self,object value){
 	    self->valueCounter++;
     }
 	if((self->valueCounter+1)%2 == 1){
-		self->middlePtr = (linkedListNode*)self->middlePtr->next;
+		self->middleNode = (linkedListNode*)self->middleNode->next;
 	}
 	else if((self->valueCounter+1)%2 == 0){
 		//Do nothing
