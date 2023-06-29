@@ -1,5 +1,6 @@
 #include "simpleList.h"
 #include <stdint.h>
+#include <stdlib.h>
 //init functions
 simpleList * simpleList_init_void(){
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
@@ -197,14 +198,39 @@ int32_t simpleList_insert_int32_int32_object(simpleList* self,int32_t _position,
 	    }
 	    position = self->valueCounter + position + 1;
     }
-    simpleList * tmpArray = (simpleList*)malloc(sizeof(object)*(self->valueCounter+1));
+    //it needs one more place
+    /*
+    object* tmpPtr = malloc(sizeof(object)*self->valueCounter+2);
     for(int32_t i = 0;i != position;i++){
-        simpleList_append_int32_object(tmpArray,self->objectArray[i]);
+	    tmpPtr[i] = self->objectArray[i];
     }
-    simpleList_append_int32_object(tmpArray,value);
-    for(int32_t i = 0;i != self->valueCounter - position;i++){
-        //simpleList_append_int32_object(list,);
+    tmpPtr[position] = value;
+    for(int32_t i = 0;i != (self->valueCounter+1) - position;i++){
+	tmpPtr[i+position+1] = self->objectArray[i+position];
     }
+    free(self->objectArray);
+    self->objectArray = tmpPtr;
+    self->valueCounter++;
+    self->positionCounter++;*/
+    simpleList * tmpObject = simpleList_init_int32(self->valueCounter+2);
+    for(int32_t i = 0;i != position;i++){
+	    simpleList_append_int32_object(tmpObject,self->objectArray[i]);
+    }
+    simpleList_append_int32_object(tmpObject,self->objectArray[position]);
+    for(int32_t i =0;i != (self->valueCounter+1) - position;i++){
+	    simpleList_append_int32_object(tmpObject, self->objectArray[i+position]);
+    }
+    object * tmp_objectArray = self->objectArray;
+    self->objectArray = tmpObject->objectArray;
+    tmpObject->objectArray = tmp_objectArray;
+    int32_t tmp_valueCounter = self->valueCounter;
+    self->valueCounter = tmpObject->valueCounter;
+    tmpObject->valueCounter = tmp_valueCounter;
+    int32_t tmp_positionCounter = self->positionCounter;
+    self->positionCounter = tmpObject->positionCounter;
+    tmpObject->positionCounter = tmp_positionCounter;
+    free(tmpObject->objectArray);
+    free(tmpObject);
     return position;
 }
 
