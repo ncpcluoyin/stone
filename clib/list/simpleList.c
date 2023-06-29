@@ -7,7 +7,11 @@ simpleList * simpleList_init_void(){
     self->objectArray = malloc(sizeof(object) * simpleListDefaultInitSize);
     return self;
 }
-simpleList * simpleList_init_int32(int32_t initSize){
+simpleList * simpleList_init_int32(int32_t _initSize){
+    int32_t initSize = _initSize;
+    if(initSize < simpleListDefaultInitSize){
+        initSize = simpleListDefaultInitSize;
+    }
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
     self->valueCounter = initSize - 1;
     self->positionCounter = 0;
@@ -112,12 +116,25 @@ void simpleList_close(simpleList* self){
 }
 
 object simpleList_pop_object_void(simpleList* self){
+    if(self->positionCounter == 0){
+        return NULL;
+    }
 	object result = self->objectArray[self->positionCounter-1];
 	self->positionCounter--;
 	return result;
 }
 
-object simpleList_pop_object_int32(simpleList* self,int32_t position){
+object simpleList_pop_object_int32(simpleList* self,int32_t _position){
+    int32_t position = _position;
+    if(position > (self->positionCounter - 1)){
+        return NULL;
+    }
+    if(position < 0){
+	    if(-(position) > self->valueCounter+1){
+		    return NULL;
+	    }
+	    position = self->valueCounter + position + 1;
+    }
 	object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
 	int32_t offSet = 0;
 	object result = NULL;
@@ -137,6 +154,9 @@ object simpleList_pop_object_int32(simpleList* self,int32_t position){
 }
 
 void simpleList_delete_bool_void(simpleList *self){
+    if(self->positionCounter == 0){
+        return;
+    }
 	free(self->objectArray[self->positionCounter-1]);
 	self->positionCounter--;
 	return;
@@ -196,12 +216,13 @@ int32_t simpleList_insert_int32_int32_object(simpleList* self,int32_t _position,
 	    }
 	    position = self->valueCounter + position + 1;
     }
-    simpleList* array = simpleList_init_int32((self->valueCounter+1) - position);
-    for(int32_t i = 0;i != (self->valueCounter+1) - position;i++){
+    int32_t tmp_positionCounter = self->positionCounter;
+    simpleList* array = simpleList_init_int32(tmp_positionCounter - position);
+    for(int32_t i = 0;i < tmp_positionCounter - position;i++){
 	    simpleList_append_int32_object(array,simpleList_pop_object_void(self));
     }
     simpleList_append_int32_object(self, value);
-    for(int32_t i = 0;i != (self->valueCounter+1) - position;i++){
+    for(int32_t i = 0;i < tmp_positionCounter - position;i++){
 	    simpleList_append_int32_object(self, simpleList_pop_object_void(array));
     }
     simpleList_close(array);

@@ -5,7 +5,7 @@
 int32_t main(){
     simpleList* list = simpleList_init_int32(14);
     int32_t* a;
-    for(int32_t i = 0;i != 20;i++){
+    for(int32_t i = 0;i != 4;i++){
         a = (int32_t*)malloc(sizeof(int32_t));
 	*a = i;
         simpleList_append_int32_object(list,a);
