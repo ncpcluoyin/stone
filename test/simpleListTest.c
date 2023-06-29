@@ -13,8 +13,8 @@ int32_t main(){
     simpleList_delete_bool_int32(list,4);
     simpleList_delete_bool_int32(list,5);
     printf("%d values\n",list->valueCounter+1);
-    printf("%dth value\n",list->positionCounter);
-    for(int32_t i = 0;i != 18;i++){
+    printf("%dth value\n",list->positionCounter - 1);
+    for(int32_t i = 0;i != list->positionCounter;i++){
 	    a = (int32_t*)simpleList_get_object_int32(list, i);
 	    printf("%dth is %d\n",i,*a);
     }
@@ -22,8 +22,8 @@ int32_t main(){
     *a = 114514;
     simpleList_insert_int32_int32_object(list,1, a);
     printf("%d values\n",list->valueCounter+1);
-    printf("%dth value\n",list->positionCounter);
-    for(int32_t i =0;i!=19;i++){
+    printf("%dth value\n",list->positionCounter - 1);
+    for(int32_t i = 0;i != list->positionCounter;i++){
 	    a = (int32_t*)simpleList_get_object_int32(list, i);
 	    printf("%dth is %d\n",i,*a);
     }

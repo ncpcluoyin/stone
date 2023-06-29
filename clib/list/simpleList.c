@@ -1,6 +1,4 @@
 #include "simpleList.h"
-#include <stdint.h>
-#include <stdlib.h>
 //init functions
 simpleList * simpleList_init_void(){
     simpleList* self = (simpleList*) malloc(sizeof(simpleList));
@@ -113,19 +111,13 @@ void simpleList_close(simpleList* self){
     free(self);
 }
 
-extern object deleteButNotFree(simpleList*,int32_t);
-
 object simpleList_pop_object_void(simpleList* self){
-    object tmp = deleteButNotFree(self,self->positionCounter-1);
-    return tmp;
+	object result = self->objectArray[self->positionCounter-1];
+	self->positionCounter--;
+	return result;
 }
 
 object simpleList_pop_object_int32(simpleList* self,int32_t position){
-    object tmp = deleteButNotFree(self,position);
-    return tmp;
-}
-
-object deleteButNotFree(simpleList* self,int32_t position){
 	object* tmpPtr = malloc((self->valueCounter+1)*sizeof(object));
 	int32_t offSet = 0;
 	object result = NULL;
@@ -142,6 +134,12 @@ object deleteButNotFree(simpleList* self,int32_t position){
 	self->objectArray = tmpPtr;
 	self->positionCounter--;
 	return result;
+}
+
+void simpleList_delete_bool_void(simpleList *self){
+	free(self->objectArray[self->positionCounter-1]);
+	self->positionCounter--;
+	return;
 }
 
 object simpleList_exchange_object_int32_object(simpleList* self,int32_t _position,object value){
@@ -198,39 +196,15 @@ int32_t simpleList_insert_int32_int32_object(simpleList* self,int32_t _position,
 	    }
 	    position = self->valueCounter + position + 1;
     }
-    //it needs one more place
-    /*
-    object* tmpPtr = malloc(sizeof(object)*self->valueCounter+2);
-    for(int32_t i = 0;i != position;i++){
-	    tmpPtr[i] = self->objectArray[i];
-    }
-    tmpPtr[position] = value;
+    simpleList* array = simpleList_init_int32((self->valueCounter+1) - position);
     for(int32_t i = 0;i != (self->valueCounter+1) - position;i++){
-	tmpPtr[i+position+1] = self->objectArray[i+position];
+	    simpleList_append_int32_object(array,simpleList_pop_object_void(self));
     }
-    free(self->objectArray);
-    self->objectArray = tmpPtr;
-    self->valueCounter++;
-    self->positionCounter++;*/
-    simpleList * tmpObject = simpleList_init_int32(self->valueCounter+2);
-    for(int32_t i = 0;i != position;i++){
-	    simpleList_append_int32_object(tmpObject,self->objectArray[i]);
+    simpleList_append_int32_object(self, value);
+    for(int32_t i = 0;i != (self->valueCounter+1) - position;i++){
+	    simpleList_append_int32_object(self, simpleList_pop_object_void(array));
     }
-    simpleList_append_int32_object(tmpObject,self->objectArray[position]);
-    for(int32_t i =0;i != (self->valueCounter+1) - position;i++){
-	    simpleList_append_int32_object(tmpObject, self->objectArray[i+position]);
-    }
-    object * tmp_objectArray = self->objectArray;
-    self->objectArray = tmpObject->objectArray;
-    tmpObject->objectArray = tmp_objectArray;
-    int32_t tmp_valueCounter = self->valueCounter;
-    self->valueCounter = tmpObject->valueCounter;
-    tmpObject->valueCounter = tmp_valueCounter;
-    int32_t tmp_positionCounter = self->positionCounter;
-    self->positionCounter = tmpObject->positionCounter;
-    tmpObject->positionCounter = tmp_positionCounter;
-    free(tmpObject->objectArray);
-    free(tmpObject);
+    simpleList_close(array);
     return position;
 }
 
