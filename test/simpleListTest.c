@@ -1,7 +1,5 @@
 #include "../clib/list/simpleList.h"
-#include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 int32_t main(){
     simpleList* list = simpleList_init_int32(14);
     int32_t* a;
