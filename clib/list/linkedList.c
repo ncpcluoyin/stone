@@ -15,10 +15,10 @@ void appendNewNode(linkedList* self){
 	self->unusedFirstNode->next = malloc(sizeof(linkedListNode));
 	((linkedListNode*)self->unusedFirstNode->next)->next = self->firstNode;
     self->valueCounter++;
-    if((self->valueCounter+1)%2 == 1){
+    if((self->valueCounter-1)%2 == 1){
         self->middleNode = (linkedListNode*)self->middleNode->next;
     }
-    else if((self->valueCounter+1)%2 == 0){
+    else if((self->valueCounter-1)%2 == 0){
         //do nothing
     }
 	return;
