@@ -7,16 +7,14 @@
 
 typedef struct{
     object value;
-    void* next;//remember to force-convert to linkedListNode*
+    object next;//remember to force-convert to linkedListNode*
+    object previous;//remember to force-convert to linkedListNode*
 } linkedListNode;
 
 typedef struct{
     int32_t valueCounter;
-    int32_t unusedFirstCounter;
-    linkedListNode* firstNode;
-    linkedListNode* middleNode;
-    linkedListNode* unusedFirstNode;
-    linkedListNode* nodeBeforeUnusedFirstNode;
+    int32_t positionCounter;
+    linkedListNode* positionPointer;
 } linkedList;
 
 //init functions
@@ -35,7 +33,6 @@ object linkedList_exchange_object_int32_object(linkedList* self,int32_t position
 bool linkedList_exchange_bool_int32_int32(linkedList* self,int32_t position1,int32_t position2);
 int32_t linkedList_insert_int32_int32_object(linkedList* self,int32_t position,object value);
 void linkedList_delete_bool_void(linkedList *self);
-
 
 //impl for linkedList end
 #endif

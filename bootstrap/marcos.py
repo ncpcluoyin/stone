@@ -1,12 +1,5 @@
 #define marcos
 import typeDefine
-class file(object):
-    def __init__(self):
-        self.classes = dict()
-        self.modules = dict()
-        self.functions = dict()
-        self.variables = dict()
-
 
 preDefineMarcos = (
     "if",
