@@ -1,1 +1,1 @@
-import lexers.splitter
+from lexers import splitter
