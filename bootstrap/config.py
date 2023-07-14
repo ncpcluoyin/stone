@@ -8,7 +8,7 @@ def read(name:str):
 
 #preReads
 
-configs_json = read("configs")
+__configs_json = read("configs")
 configures = dict()
 
 for x in configs_json:
